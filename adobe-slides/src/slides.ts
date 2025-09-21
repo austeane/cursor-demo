@@ -50,53 +50,99 @@ export const slides: Slide[] = [
     type: 'title',
     bg: 'burst',
     accent: '#9ad0ff',
-    eyebrow: '30‑Day Trial Kickoff',
-    title: 'Adobe × Cursor — Trial Scorecard',
-    subtitle: 'Outcomes, measurement, and the acceleration you should expect.',
+  eyebrow: '30‑Day Trial Kickoff',
+  title: '30‑Day Trial Goals — What we measure',
+  subtitle: 'Overall goal: increase developer effectiveness'
   },
 
-  // KPI Scorecard — edit values live
+  // Measurable sub‑goals — KPI trio
   {
     type: 'kpis',
     bg: 'plain',
-    title: "What we'll measure (and what we typically see in Month 1)",
+    title: 'Measurable sub‑goals (targets for Adobe trial)',
     kpis: [
-      { label: 'Weekly active devs', value: '80%', sub: 'by Day 28', trend: [40, 60, 72, 80] },
-      { label: 'PRs closed (index)', value: '+12%', sub: 'vs. baseline', trend: [95, 100, 108, 112] },
-      { label: 'PR lead time', value: '−15%', sub: 'by Week 4', trend: [1.0, 0.96, 0.90, 0.85], footnote: 'Lower is better' },
-      { label: 'Accepted AI lines', value: '30%', sub: 'of merged lines', trend: [12, 18, 25, 30] },
-      { label: 'Automated PR reviews', value: '70%', sub: 'PRs w/ Bugbot by W4', trend: [35, 50, 60, 70] },
+      { label: "PRs closed (month‑1 vs baseline)", value: '+10%', sub: 'target', trend: [98, 100, 104, 110] },
+      { label: 'Weekly active devs', value: '75%', sub: 'of active Adobe devs by Day 28', trend: [45, 58, 66, 75] },
+      { label: 'PRs with Bugbot review', value: '50%', sub: '≥1 Bugbot on the PR by W4', trend: [20, 32, 42, 50], footnote: 'Talking point: % PRs with accepted human comment as a cross‑check' },
     ],
-    notes: 'Numbers reflect typical large‑org first‑month outcomes; Week‑1 is ramp.',
   },
 
-  // Adoption curve (single series)
+  // Bridge slide (2.5)
+  {
+    type: 'bullets',
+    bg: 'plain',
+    title: 'Interpreting the signals',
+    bullets: [
+      "If usage is up, PRs close faster, and Bugbot flags real issues → effectiveness is improving.",
+      'We believe in this enough that the quarter after this trial, the goal is: exceed your org OKRs.'
+    ],
+  },
+
+  // Features overview
+  {
+    type: 'bullets',
+    bg: 'plain',
+    title: "Cursor features that move the needle — two types",
+    bullets: [
+      'AI‑assisted coding: Tab (multi‑line, cross‑file), Agent, Codebase Indexing, PR search.',
+      'Platform & workflow: Background agents, Slack/Linear integrations, Rules/AGENTS.md governance.'
+    ],
+  },
+
+  // Comparison table (AI coding focus and differentiators)
+  {
+    type: 'table',
+    bg: 'plain',
+    title: 'AI coding: where Cursor stands out',
+    headers: ['Dimension', 'Cursor', 'GitHub Copilot', 'Windsurf'],
+    rows: [
+      ['Multi‑file change', 'Tab + Agent (repo‑aware)', 'Inline + Chat', 'Editor + Cascade'],
+      ['Repo awareness', 'Index + PR search', 'Repo indexing for Chat', 'Context + Cascade'],
+      ['PR review', 'Bugbot with fix links', 'PR insights/summaries', 'Cascade review'],
+      ['Background agents', 'Built‑in, optional handoff', '—', 'Cascade workflows'],
+      ['Integrations', 'Slack/Linear via Web/Mobile agent', 'GitHub‑native context', 'Some integrations'],
+    ],
+  },
+
+  // Enterprise & org features
+  {
+    type: 'bullets',
+    bg: 'plain',
+    title: 'Not just for coders — enterprise & governance',
+    bullets: [
+      'Privacy Mode (zero data retention).',
+      'Auto‑run allowlist for agents/tools.',
+      'SSO + SCIM; org‑level enforcement; Analytics & AI Code Tracking.'
+    ],
+  },
+
+  // Adoption curve (kept from scorecard)
   {
     type: 'chart',
     bg: 'plain',
     title: 'Adoption — Weekly active seats',
     x: ['W1', 'W2', 'W3', 'W4'],
     series: [
-      { name: 'Cursor @ Adobe (target)', data: [40, 60, 72, 80] }
+      { name: 'Cursor @ Adobe (target)', data: [45, 58, 66, 75] }
     ],
     yLabel: '% active',
     notes: 'Ramps after enablement + week‑2 patterns training.'
   },
 
-  // PRs closed — index with a comparator line
+  // PRs closed — index with a comparator line (kept)
   {
     type: 'chart',
     bg: 'plain',
     title: 'PRs closed — month‑1 acceleration (baseline 100)',
     x: ['W1', 'W2', 'W3', 'W4'],
     series: [
-      { name: 'Cursor expected', data: [95, 100, 108, 115] },
+      { name: 'Cursor expected', data: [98, 100, 104, 110] },
       { name: 'Other tools (avg)', data: [94, 97, 101, 103], dashed: true }
     ],
     yLabel: 'Index (100 = pre‑trial)',
   },
 
-  // Mapping: metric -> where/how measured
+  // Measurement mapping (kept)
   {
     type: 'table',
     bg: 'plain',
@@ -111,7 +157,7 @@ export const slides: Slide[] = [
     ],
   },
 
-  // Trial plan in bullets (keep short for time box)
+  // Trial plan (kept)
   {
     type: 'bullets',
     bg: 'plain',
@@ -125,12 +171,13 @@ export const slides: Slide[] = [
     ],
   },
 
+  // Live edit closer (optional)
   {
     type: 'title',
     bg: 'burst',
     accent: '#ffd08a',
     eyebrow: 'Live Edit',
     title: 'Change a KPI live → site updates',
-    subtitle: "Let's bump PRs closed from +12% → +15% to reflect last week's spike.",
+    subtitle: "Let's bump PRs closed from +10% → +12% to reflect last week's spike.",
   },
 ]

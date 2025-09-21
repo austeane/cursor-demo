@@ -214,7 +214,7 @@ function ChartSlideView({ slide }: { slide: ChartSlide }) {
     <div className={`card chart ${slide.bg || 'plain'}`}>
       <h2 className="heading">{slide.title}</h2>
       <div className="chartWrap">
-        <svg viewBox={`0 0 ${W} ${H}`} width="100%" height="auto" role="img">
+        <svg viewBox={`0 0 ${W} ${H}`} width="100%" role="img">
           {/* Y grid */}
           {gridYs.map((gy, i) => (
             <line key={i} x1={pad.l} x2={W - pad.r} y1={gy} y2={gy} stroke="rgba(255,255,255,0.08)" />
