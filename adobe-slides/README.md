@@ -1,69 +1,51 @@
-# React + TypeScript + Vite
+### Adobe × Cursor — Trial Scorecard Slides
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Run a polished, live‑editable slideshow with keyboard navigation, presenter notes, KPI tiles, and a lightweight SVG line chart. Content lives in `src/slides.ts` and updates hot‑reload in dev.
 
-Currently, two official plugins are available:
+### Quick start
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Open the served URL and use your keyboard to present.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### Shortcuts
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- → / Space: Next (reveals bullets one‑by‑one)
+- ←: Previous (un‑reveal bullets, then go back)
+- N: Toggle presenter notes
+- O: Overview grid
+- F: Fullscreen
+- H / ?: Help
+
+### Customizing slides
+
+- Edit `src/slides.ts`. Types include `title`, `bullets`, `table`, `kpis`, `chart`.
+- Per‑slide options:
+  - `bg`: `'plain' | 'burst'` background
+  - `accent`: hex color to theme components
+  - `notes`: presenter notes (shown with N)
+
+### Chart slide
+
+Provide `x: string[]`, and `series: { name: string; data: number[]; dashed?: boolean }[]`. Optional `yLabel`.
+
+### Printing to PDF
+
+Use the browser print dialog. Footer/overlays are auto‑hidden for clean PDFs.
+
+### Development
+
+- Dev server: `npm run dev`
+- Build: `npm run build`
+- Lint: `npm run lint`
+
+### Accessibility
+
+- Buttons have labels; slides update the URL hash to allow reloading at the same slide.
+
+### Notes
+
+- Bullet reveal is now supported. To disable for a slide, convert it to a `table` or `title`, or reveal count will be ignored.

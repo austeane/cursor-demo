@@ -54,8 +54,8 @@ export const slides: Slide[] = [
     bg: 'burst',
     accent: '#9ad0ff',
   eyebrow: 'Adobe Trial Kickoff',
-  title: 'Making this 30 day trial a success',
-  subtitle: 'Overall goal: increase developer effectiveness'
+  title: 'Making this 30‑day trial a success',
+  subtitle: 'Overall goal: increase developer effectiveness',
   },
 
   // Measurable sub‑goals — KPI trio
@@ -66,7 +66,7 @@ export const slides: Slide[] = [
     kpis: [
       { label: "PRs closed vs baseline", value: '+10%', trend: [95, 97, 101, 110] },
       { label: 'Weekly active devs', value: '75%', trend: [0, 40, 65, 75] },
-      { label: 'PRs with helpful Bugbot review', value: '50%', sub: '≥1 accepted Bugbot reivew', trend: [0, 23, 39, 50] },
+      { label: 'PRs with helpful Bugbot review', value: '50%', sub: '≥1 accepted Bugbot review', trend: [0, 23, 39, 50] },
     ],
   },
 
@@ -74,11 +74,11 @@ export const slides: Slide[] = [
   {
     type: 'bullets',
     bg: 'plain',
-    title: "Cursor features that move the needle — two types",
+    title: 'Cursor features that move the needle — two types',
     bullets: [
-      'AI‑assisted coding: With Tab (multi‑line, cross‑file), Agent, and Codebase Indexing, ',
+      'AI‑assisted coding: Tab (multi‑line, cross‑file), Agent, and Codebase Indexing.',
       'Platform & workflow: Background agents, Slack/Linear integrations, Rules/AGENTS.md governance.',
-      'BugBot: Automated reivews'
+      'BugBot: Automated reviews',
     ],
   },
 
@@ -108,7 +108,7 @@ export const slides: Slide[] = [
         "No model selection in Copilot’s version.",
         'Microsoft Teams/Azure Boards integration just entered preview this week.'
       ]},
-      'Consistent immediate access to latest models like Opus 4.1 (not available in Windsurf for months), while Copilot is often delayed in getting the latest models.'
+      'Consistent immediate access to latest models like Opus 4.1 (not available in Windsurf for months), while Copilot is often delayed in getting the latest models.',
 
     ],
   },
@@ -130,7 +130,7 @@ export const slides: Slide[] = [
         'Encryption in transit and at rest',
         'Subprocessors & DPA details on Trust Center',
       ]},
-      "Detailed security and privacy information at https://trust.cursor.com/ and https://cursor.com/security"
+      'Detailed security and privacy information at https://trust.cursor.com/ and https://cursor.com/security'
     ],
   },
 
@@ -159,7 +159,7 @@ export const slides: Slide[] = [
       'Weekly meetings between myself and Adobe Eng Ops to discuss progress and KPIs',
       'Daily open office hours with engineers and engineering leaders',
       'Live dashboards measuring adoption, usage, and outcomes',
-      'Cursor-External slack channel for support and feedback',
+      'Cursor‑External Slack channel for support and feedback',
     ],
   },
 
