@@ -19,12 +19,14 @@ export default function App() {
   const [showNotes, setShowNotes] = useState(false)
   const [showOverview, setShowOverview] = useState(false)
   const [help, setHelp] = useState(false)
+  const [reveals, setReveals] = useState<Record<number, number>>({})
   const total = slides.length
 
   // HMR for slides
   useEffect(() => {
-    if (import.meta.hot) {
-      import.meta.hot.accept('./slides', (mod) => {
+    const hot = (import.meta as unknown as { hot?: { accept: (path: string, cb: (mod: { slides?: Slide[] }) => void) => void } }).hot
+    if (hot) {
+      hot.accept('./slides', (mod) => {
         if (mod?.slides) setSlides(mod.slides)
       })
     }
@@ -32,8 +34,26 @@ export default function App() {
 
   const current = slides[i]
   const progress = useMemo(() => (i + 1) / total, [i, total])
-  const next = () => setI((n) => Math.min(n + 1, total - 1))
-  const prev = () => setI((n) => Math.max(n - 1, 0))
+  const currentBulletCount = useMemo(() =>
+    current && (current as any).type === 'bullets' ? ((current as any).bullets?.length ?? 0) : 0
+  , [current])
+  const currentRevealCount = reveals[i] ?? 0
+
+  const next = () => {
+    if ((current as any)?.type === 'bullets' && currentRevealCount < currentBulletCount) {
+      setReveals((prev) => ({ ...prev, [i]: (prev[i] ?? 0) + 1 }))
+      return
+    }
+    setI((n) => Math.min(n + 1, total - 1))
+  }
+
+  const prev = () => {
+    if ((current as any)?.type === 'bullets' && currentRevealCount > 0) {
+      setReveals((prev) => ({ ...prev, [i]: Math.max(0, (prev[i] ?? 0) - 1) }))
+      return
+    }
+    setI((n) => Math.max(n - 1, 0))
+  }
   const go = (idx: number) => { setI(Math.max(0, Math.min(idx, total - 1))); setShowOverview(false) }
 
   const toggleFullscreen = async () => {
@@ -86,7 +106,7 @@ export default function App() {
       <div className="progress"><div className="bar" style={{ transform: `scaleX(${progress})` }} /></div>
 
       <div className="frame">
-        <SlideView slide={current} />
+        <SlideView slide={current} revealCount={(current as any)?.type === 'bullets' ? currentRevealCount : undefined} />
 
         <div className="footer">
           <span className="index">{i + 1} / {total}</span>
@@ -108,7 +128,7 @@ export default function App() {
   )
 }
 
-function SlideView({ slide }: { slide: Slide }) {
+function SlideView({ slide, revealCount = Infinity }: { slide: Slide; revealCount?: number }) {
   switch (slide.type) {
     case 'title':
       return (
@@ -125,8 +145,8 @@ function SlideView({ slide }: { slide: Slide }) {
           <ul>
             {(slide as any).bullets.map((b: any, idx: number) => (
               typeof b === 'string'
-                ? <li key={idx}><span className="dot" /> {b}</li>
-                : <li key={idx}>
+                ? <li key={idx} className={`reveal ${idx < (revealCount as number) ? 'on' : 'off'}`}><span className="dot" /> {b}</li>
+                : <li key={idx} className={`reveal ${idx < (revealCount as number) ? 'on' : 'off'}`}>
                     <span className="dot" /> {b.text}
                     {Array.isArray(b.sub) && b.sub.length > 0 && (
                       <ul className="sub">
