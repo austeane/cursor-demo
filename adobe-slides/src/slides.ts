@@ -12,16 +12,19 @@ export type TitleSlide = Common & {
   subtitle?: string
 }
 
+export type BulletItem = string | { text: string; sub?: string[] }
+
 export type BulletsSlide = Common & {
   type: 'bullets'
   title: string
-  bullets: string[]
+  bullets: BulletItem[]
   notes?: string
 }
 
 export type TableSlide = Common & {
   type: 'table'
   title: string
+  subtitle?: string
   headers: string[]
   rows: string[][]
   notes?: string
@@ -50,8 +53,8 @@ export const slides: Slide[] = [
     type: 'title',
     bg: 'burst',
     accent: '#9ad0ff',
-  eyebrow: '30‑Day Trial Kickoff',
-  title: '30‑Day Trial Goals — What we measure',
+  eyebrow: 'Adobe Trial Kickoff',
+  title: 'Making this 30 day trial a success',
   subtitle: 'Overall goal: increase developer effectiveness'
   },
 
@@ -59,22 +62,11 @@ export const slides: Slide[] = [
   {
     type: 'kpis',
     bg: 'plain',
-    title: 'Measurable sub‑goals (targets for Adobe trial)',
+    title: 'Trial targets that track with developer effectiveness',
     kpis: [
-      { label: "PRs closed (month‑1 vs baseline)", value: '+10%', sub: 'target', trend: [98, 100, 104, 110] },
-      { label: 'Weekly active devs', value: '75%', sub: 'of active Adobe devs by Day 28', trend: [45, 58, 66, 75] },
-      { label: 'PRs with Bugbot review', value: '50%', sub: '≥1 Bugbot on the PR by W4', trend: [20, 32, 42, 50], footnote: 'Talking point: % PRs with accepted human comment as a cross‑check' },
-    ],
-  },
-
-  // Bridge slide (2.5)
-  {
-    type: 'bullets',
-    bg: 'plain',
-    title: 'Interpreting the signals',
-    bullets: [
-      "If usage is up, PRs close faster, and Bugbot flags real issues → effectiveness is improving.",
-      'We believe in this enough that the quarter after this trial, the goal is: exceed your org OKRs.'
+      { label: "PRs closed vs baseline", value: '+10%', trend: [95, 97, 101, 110] },
+      { label: 'Weekly active devs', value: '75%', trend: [0, 40, 65, 75] },
+      { label: 'PRs with helpful Bugbot review', value: '50%', sub: '≥1 accepted Bugbot reivew', trend: [0, 23, 39, 50] },
     ],
   },
 
@@ -84,23 +76,40 @@ export const slides: Slide[] = [
     bg: 'plain',
     title: "Cursor features that move the needle — two types",
     bullets: [
-      'AI‑assisted coding: Tab (multi‑line, cross‑file), Agent, Codebase Indexing, PR search.',
-      'Platform & workflow: Background agents, Slack/Linear integrations, Rules/AGENTS.md governance.'
+      'AI‑assisted coding: With Tab (multi‑line, cross‑file), Agent, and Codebase Indexing, ',
+      'Platform & workflow: Background agents, Slack/Linear integrations, Rules/AGENTS.md governance.',
+      'BugBot: Automated reivews'
     ],
   },
 
-  // Comparison table (AI coding focus and differentiators)
+  // Background agents intro slide (precedes competitor comparisons)
   {
-    type: 'table',
+    type: 'bullets',
     bg: 'plain',
-    title: 'AI coding: where Cursor stands out',
-    headers: ['Dimension', 'Cursor', 'GitHub Copilot', 'Windsurf'],
-    rows: [
-      ['Multi‑file change', 'Tab + Agent (repo‑aware)', 'Inline + Chat', 'Editor + Cascade'],
-      ['Repo awareness', 'Index + PR search', 'Repo indexing for Chat', 'Context + Cascade'],
-      ['PR review', 'Bugbot with fix links', 'PR insights/summaries', 'Cascade review'],
-      ['Background agents', 'Built‑in, optional handoff', '—', 'Cascade workflows'],
-      ['Integrations', 'Slack/Linear via Web/Mobile agent', 'GitHub‑native context', 'Some integrations'],
+    title: 'Background agents — delegate work without breaking flow',
+    bullets: [
+      'Start new work in the background from within Cursor without losing focus.',
+      'Start agents from Slack, Linear, or even your phone, enabling more employees to start tasks.',
+      'Create your own integrations with our API.',
+      'Everything runs in an isolated environment on a new branch.'
+    ],
+    notes: 'More details: https://cursor.com/docs/background-agent',
+  },
+
+  // Competitor comparisons — bullets (replaces table)
+  {
+    type: 'bullets',
+    bg: 'plain',
+    title: 'Cursor vs competitors — quick comparisons',
+    bullets: [
+      '93% of developers prefer Cursor in head‑to‑head comparisons.',
+      { text: 'We ship, they adapt, e.g. Background Agents:', sub: [
+        'Still no comparable feature in Windsurf.',
+        "No model selection in Copilot’s version.",
+        'Microsoft Teams/Azure Boards integration just entered preview this week.'
+      ]},
+      'Consistent immediate access to latest models like Opus 4.1 (not available in Windsurf for months), while Copilot is often delayed in getting the latest models.'
+
     ],
   },
 
@@ -108,38 +117,21 @@ export const slides: Slide[] = [
   {
     type: 'bullets',
     bg: 'plain',
-    title: 'Not just for coders — enterprise & governance',
+    title: 'Enterprise & governance',
     bullets: [
-      'Privacy Mode (zero data retention).',
-      'Auto‑run allowlist for agents/tools.',
-      'SSO + SCIM; org‑level enforcement; Analytics & AI Code Tracking.'
+      'Privacy Mode (zero data retention) means no training on your prompts or code.',
+      { text: 'Identity & governance', sub: [
+        'SAML SSO + SCIM for automated provisioning',
+        'Org‑level policy enforcement (models, features, agent/tools)',
+        'Audit logs and admin analytics',
+      ]},
+      { text: 'Security & compliance', sub: [
+        'SOC 2 Type II certified',
+        'Encryption in transit and at rest',
+        'Subprocessors & DPA details on Trust Center',
+      ]},
+      "Detailed security and privacy information at https://trust.cursor.com/ and https://cursor.com/security"
     ],
-  },
-
-  // Adoption curve (kept from scorecard)
-  {
-    type: 'chart',
-    bg: 'plain',
-    title: 'Adoption — Weekly active seats',
-    x: ['W1', 'W2', 'W3', 'W4'],
-    series: [
-      { name: 'Cursor @ Adobe (target)', data: [45, 58, 66, 75] }
-    ],
-    yLabel: '% active',
-    notes: 'Ramps after enablement + week‑2 patterns training.'
-  },
-
-  // PRs closed — index with a comparator line (kept)
-  {
-    type: 'chart',
-    bg: 'plain',
-    title: 'PRs closed — month‑1 acceleration (baseline 100)',
-    x: ['W1', 'W2', 'W3', 'W4'],
-    series: [
-      { name: 'Cursor expected', data: [98, 100, 104, 110] },
-      { name: 'Other tools (avg)', data: [94, 97, 101, 103], dashed: true }
-    ],
-    yLabel: 'Index (100 = pre‑trial)',
   },
 
   // Measurement mapping (kept)
@@ -161,13 +153,13 @@ export const slides: Slide[] = [
   {
     type: 'bullets',
     bg: 'plain',
-    title: 'Trial timeline',
+    title: '4 Week Plan',
     bullets: [
-      'Week 0: SSO + policy; pilot repos; enable analytics',
-      'Week 1: Tab/Agent patterns; Bugbot on PRs; snapshot metrics',
-      'Week 2: apples‑to‑apples tasks across tools',
-      'Week 3: tune rules; remove friction; snapshot',
-      'Week 4: exec readout — charts + 3 short stories',
+      'Detailed call with Compliance to answer questions and enable background agents, and Slack/Linear integrations',
+      'Weekly meetings between myself and Adobe Eng Ops to discuss progress and KPIs',
+      'Daily open office hours with engineers and engineering leaders',
+      'Live dashboards measuring adoption, usage, and outcomes',
+      'Cursor-External slack channel for support and feedback',
     ],
   },
 
@@ -176,8 +168,7 @@ export const slides: Slide[] = [
     type: 'title',
     bg: 'burst',
     accent: '#ffd08a',
-    eyebrow: 'Live Edit',
-    title: 'Change a KPI live → site updates',
-    subtitle: "Let's bump PRs closed from +10% → +12% to reflect last week's spike.",
+    eyebrow: 'Live Cursor Edit',
+    title: "Change this slideshow to reflect Adobe's branding",
   },
 ]

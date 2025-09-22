@@ -94,8 +94,14 @@ body {
 .card.bullets li.reveal.on  { opacity: 1; transform: translateY(0); height: auto; }
 .dot { display: inline-block; width: 9px; height: 9px; margin-right: 10px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 14px color-mix(in srgb, var(--accent) 65%, transparent); }
 
+/* Sub-bullets */
+.card.bullets ul ul { margin: 8px 0 0 22px; padding: 0; display: grid; gap: 10px; }
+.card.bullets ul ul li { font-size: clamp(16px, 2vw, 20px); color: var(--muted); }
+.subDot { display: inline-block; width: 7px; height: 7px; margin-right: 10px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 10px color-mix(in srgb, var(--accent) 50%, transparent); opacity: .9; }
+
 /* Table */
 .card.table .tableWrap { width: 100%; overflow: auto; }
+.card.table .subtitle { margin-top: -15px; }
 .card.table table {
   width: 100%; border-collapse: collapse; font-size: clamp(14px, 1.7vw, 18px);
   background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 12px; overflow: hidden;

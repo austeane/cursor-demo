@@ -122,13 +122,29 @@ function SlideView({ slide }: { slide: Slide }) {
       return (
         <div className={`card bullets ${slide.bg || 'plain'}`}>
           <h2 className="heading">{(slide as any).title}</h2>
-          <ul>{(slide as any).bullets.map((b: string, idx: number) => <li key={idx}><span className="dot" /> {b}</li>)}</ul>
+          <ul>
+            {(slide as any).bullets.map((b: any, idx: number) => (
+              typeof b === 'string'
+                ? <li key={idx}><span className="dot" /> {b}</li>
+                : <li key={idx}>
+                    <span className="dot" /> {b.text}
+                    {Array.isArray(b.sub) && b.sub.length > 0 && (
+                      <ul className="sub">
+                        {b.sub.map((s: string, j: number) => (
+                          <li key={j}><span className="subDot" /> {s}</li>
+                        ))}
+                      </ul>
+                    )}
+                  </li>
+            ))}
+          </ul>
         </div>
       )
     case 'table':
       return (
         <div className={`card table ${slide.bg || 'plain'}`}>
           <h2 className="heading">{(slide as any).title}</h2>
+          {'subtitle' in slide && (slide as any).subtitle && <p className="subtitle">{(slide as any).subtitle}</p>}
           <div className="tableWrap">
             <table>
               <thead><tr>{(slide as any).headers.map((h: string, i: number) => <th key={i}>{h}</th>)}</tr></thead>
@@ -161,7 +177,7 @@ function KpiGridSlide({ slide }: { slide: KpiSlide }) {
             <div className="kpiValue">{k.value}</div>
             <div className="kpiLabel">{k.label}</div>
             {k.sub && <div className="kpiSub">{k.sub}</div>}
-            {k.trend && <Spark values={k.trend} />}
+            {k.trend && <Spark values={k.trend} target={k.value} />}
             {k.footnote && <div className="kpiFoot">{k.footnote}</div>}
           </div>
         ))}
@@ -170,8 +186,8 @@ function KpiGridSlide({ slide }: { slide: KpiSlide }) {
   )
 }
 
-function Spark({ values }: { values: number[] }) {
-  const w = 84, h = 28, p = 2
+function Spark({ values, target }: { values: number[]; target?: string | number }) {
+  const w = 92, h = 32, p = 8
   const min = Math.min(...values), max = Math.max(...values)
   const dx = (w - p * 2) / Math.max(1, values.length - 1)
   const scaleY = (v: number) => {
@@ -181,10 +197,20 @@ function Spark({ values }: { values: number[] }) {
   const d = values.map((v, i) => `${i ? 'L' : 'M'} ${p + i * dx} ${scaleY(v)}`).join(' ')
   const lastX = p + (values.length - 1) * dx
   const lastY = scaleY(values[values.length - 1])
+  const xEndLabel = values.length
+  const targetLabel = target ?? values[values.length - 1]
+  const firstX = p
+  const firstY = scaleY(values[0])
+  const zeroLabelX = Math.max(6, firstX - 2)
+  const zeroLabelY = Math.min(h - 2, firstY + 8)
   return (
     <svg className="spark" viewBox={`0 0 ${w} ${h}`} width={w} height={h} aria-hidden="true">
       <path d={d} fill="none" stroke="var(--accent)" strokeWidth="2" />
       <circle cx={lastX} cy={lastY} r="2.5" fill="var(--accent)" />
+      {/* tiny axis labels */}
+      <text x={zeroLabelX} y={zeroLabelY} textAnchor="end" fill="#a5aab5" fontSize="10">0</text>
+      <text x={lastX} y={h - 3} textAnchor="middle" fill="#a5aab5" fontSize="10">{xEndLabel}</text>
+      <text x={zeroLabelX -6} y={10} textAnchor="start" fill="#a5aab5" fontSize="10">{String(targetLabel)}</text>
     </svg>
   )
 }
@@ -210,6 +236,10 @@ function ChartSlideView({ slide }: { slide: ChartSlide }) {
   // horizontal gridlines (4)
   const gridYs = [0, 0.25, 0.5, 0.75, 1].map(r => pad.t + innerH * r)
 
+  // axis helper labels
+  const xEndLabel = slide.x.length
+  const targetValue = (slide.series[0]?.data?.[slide.series[0]?.data.length - 1]) ?? max
+
   return (
     <div className={`card chart ${slide.bg || 'plain'}`}>
       <h2 className="heading">{slide.title}</h2>
@@ -223,9 +253,14 @@ function ChartSlideView({ slide }: { slide: ChartSlide }) {
           {slide.x.map((label, i) => (
             <text key={i} x={x(i)} y={H - 10} textAnchor="middle" fill="#a5aab5" fontSize="12">{label}</text>
           ))}
+          {/* Small axis endpoints */}
+          <text x={pad.l} y={H - 10} textAnchor="middle" fill="#a5aab5" fontSize="12">0</text>
+          <text x={W - pad.r} y={H - 10} textAnchor="middle" fill="#a5aab5" fontSize="12">{xEndLabel}</text>
           {/* Y min/max labels */}
           <text x={8} y={pad.t + 8} fill="#a5aab5" fontSize="12">{max}</text>
           <text x={8} y={pad.t + innerH + 4} fill="#a5aab5" fontSize="12">{min}</text>
+          {/* Y-axis target label at the top */}
+          <text x={pad.l - 10} y={pad.t + 8} textAnchor="end" fill="#a5aab5" fontSize="12">{targetValue}</text>
           {/* Series */}
           {slide.series.map((s, idx) => (
             <g key={idx}>
