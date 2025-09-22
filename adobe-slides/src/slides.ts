@@ -138,7 +138,7 @@ export const slides: Slide[] = [
   {
     type: 'bullets',
     bg: 'plain',
-    title: '4 Week Plan',
+    title: '4 Week Plan'
     bullets: [
       'Detailed call with Compliance to answer questions and enable background agents, and Slack/Linear integrations',
       'Weekly meetings between myself and Adobe Eng Ops to discuss progress and KPIs',
