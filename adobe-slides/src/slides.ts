@@ -66,7 +66,7 @@ export const slides: Slide[] = [
     kpis: [
       { label: "PRs closed vs baseline", value: '+10%', trend: [95, 97, 101, 110] },
       { label: 'Weekly active devs', value: '75%', trend: [0, 40, 65, 75] },
-      { label: 'PRs with helpful Bugbot review', value: '50%', sub: '≥1 accepted Bugbot reivew', trend: [0, 23, 39, 50] },
+      { label: 'PRs with helpful Bugbot review', value: '50%', sub: '≥1 accepted Bugbot review', trend: [0, 23, 39, 50] },
     ],
   },
 
@@ -104,9 +104,9 @@ export const slides: Slide[] = [
     bullets: [
       '93% of developers prefer Cursor in head‑to‑head comparisons.',
       { text: 'We ship, they adapt, e.g. Background Agents:', sub: [
-        'Still no comparable feature in Windsurf.',
+        'Still no isolated agent environment in Windsurf.',
         "No model selection in Copilot’s version.",
-        'Microsoft Teams/Azure Boards integration just entered preview this week.'
+        'Microsoft Teams/Azure Boards integration just entered preview this week, while we released our Slack integration in June.'
       ]},
       'Consistent immediate access to latest models like Opus 4.1 (not available in Windsurf for months), while Copilot is often delayed in getting the latest models.'
 
@@ -119,7 +119,7 @@ export const slides: Slide[] = [
     bg: 'plain',
     title: 'Enterprise & governance',
     bullets: [
-      'Privacy Mode (zero data retention) means no training on your prompts or code.',
+      'Privacy Mode means no training on your prompts or code, and zero data retention by our model providers.',
       { text: 'Identity & governance', sub: [
         'SAML SSO + SCIM for automated provisioning',
         'Org‑level policy enforcement (models, features, agent/tools)',
@@ -128,24 +128,9 @@ export const slides: Slide[] = [
       { text: 'Security & compliance', sub: [
         'SOC 2 Type II certified',
         'Encryption in transit and at rest',
-        'Subprocessors & DPA details on Trust Center',
+        'Code will always hit our servers, but is never trained on by us or any of our model providers',
       ]},
       "Detailed security and privacy information at https://trust.cursor.com/ and https://cursor.com/security"
-    ],
-  },
-
-  // Measurement mapping (kept)
-  {
-    type: 'table',
-    bg: 'plain',
-    title: 'Measurement plan',
-    headers: ['Metric', 'How we capture it', 'Owner'],
-    rows: [
-      ['Weekly active devs', 'Cursor Analytics → Active users by team', 'Adobe Eng Ops'],
-      ['Accepted AI lines', 'AI Code Tracking → accepted lines %', 'Team Leads'],
-      ['PRs closed / Lead time', 'Repo metrics vs. week −1 baseline', 'Adobe Eng Ops'],
-      ['Automated review coverage', 'Bugbot enabled on pilot repos', 'Repo Maintainers'],
-      ['Qual feedback', 'Pre/post 5‑min survey', 'SE + HRBP'],
     ],
   },
 
@@ -159,7 +144,7 @@ export const slides: Slide[] = [
       'Weekly meetings between myself and Adobe Eng Ops to discuss progress and KPIs',
       'Daily open office hours with engineers and engineering leaders',
       'Live dashboards measuring adoption, usage, and outcomes',
-      'Cursor-External slack channel for support and feedback',
+      'Cursor-external Slack channel for support and feed,back',
     ],
   },
 

@@ -1,0 +1,29 @@
+---
+globs: *.ts,*.tsx,*.js,*.jsx
+description: Check slide changes by browsing to the dev server and validate changes
+---
+
+# Slide Validation Rule
+
+When changes are made to slide content or configuration files, automatically validate them by:
+
+1. **Check if dev server is running**: First verify that `npm run dev` is running on port 5173
+2. **Browse to the slideshow**: Navigate to `http://localhost:5173` to view the current state
+3. **Validate changes**: Check that the modified slides render correctly and display the expected content
+4. **Handle errors**: If there are any rendering issues or the dev server isn't running, start the dev server with `npm run dev` in the `adobe-slides` directory
+
+## Implementation Steps
+
+1. Use MCP Playwright tools to:
+   - Navigate to `http://localhost:5173`
+   - Take a snapshot of the current slide state
+   - Verify the slide content matches the changes made in [slides.ts](mdc:adobe-slides/src/slides.ts)
+
+2. If the dev server isn't accessible:
+   - Run `cd adobe-slides && npm run dev` to start the development server
+   - Wait for the server to be ready
+   - Retry the validation
+
+3. Report any issues found during validation
+
+This rule ensures that all slide changes are immediately validated in the browser, providing instant feedback on the visual impact of modifications.
